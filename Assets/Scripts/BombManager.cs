@@ -5,6 +5,7 @@ using UnityEngine;
 public class BombManager : MonoBehaviour
 {
     public GameObject bombPrefab; // The bomb prefab to instantiate
+    public Transform player; // Reference to the player
     public float holdTime = 5f; // Time required to hold the key
     public float explosionDelay = 10f; // Time before the bomb explodes
 
@@ -34,7 +35,7 @@ public class BombManager : MonoBehaviour
     private void PlaceBomb()
     {
         // Instantiate the bomb at the player's position
-        GameObject bomb = Instantiate(bombPrefab, transform.position, Quaternion.identity);
+        GameObject bomb = Instantiate(bombPrefab, player.position, Quaternion.identity);
 
         // Start the explosion countdown
         StartCoroutine(ExplodeBomb(bomb));
@@ -53,20 +54,21 @@ public class BombManager : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         // Check if the player entered the bomb zone
-        if (other.CompareTag("BombZone_A"))
+        if (other.transform == player)
         {
             isInBombZone = true;
-            Debug.Log("BOMB ZONE!");
+            Debug.Log("Player entered bomb zone.");
         }
     }
 
     private void OnTriggerExit(Collider other)
     {
         // Check if the player exited the bomb zone
-        if (other.CompareTag("BombZone_A"))
+        if (other.transform == player)
         {
             isInBombZone = false;
-            Debug.Log("NO BOMB ZONE!");
+            Debug.Log("Player exited bomb zone.");
         }
     }
 }
+
