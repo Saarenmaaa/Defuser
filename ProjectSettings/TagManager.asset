@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - BombZone_A
+  - BombZone_B
   layers:
   - Default
   - TransparentFX

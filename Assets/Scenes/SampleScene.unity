@@ -851,31 +851,14 @@ GameObject:
   - component: {fileID: 1225869681}
   - component: {fileID: 1225869680}
   - component: {fileID: 1225869679}
-  - component: {fileID: 1225869678}
+  - component: {fileID: 1225869683}
   m_Layer: 0
   m_Name: BombZone_B
-  m_TagString: BombZone_A
+  m_TagString: BombZone_B
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1225869678
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1225869677}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 24bc5300aaf84f0459d7b501451ac6f4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bombPrefab: {fileID: 7981690003381977717, guid: c6701473dd673ac4b97345742f1a1b2b,
-    type: 3}
-  player: {fileID: 784753659}
-  holdTime: 3
-  explosionDelay: 10
 --- !u!33 &1225869679
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -962,6 +945,23 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1225869683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1225869677}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7375ac5eff456cd4182939ec4bdecdbd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bombPrefab: {fileID: 7981690003381977717, guid: c6701473dd673ac4b97345742f1a1b2b,
+    type: 3}
+  player: {fileID: 784753659}
+  holdTime: 3
+  explosionDelay: 10
 --- !u!1 &1816442380
 GameObject:
   m_ObjectHideFlags: 0

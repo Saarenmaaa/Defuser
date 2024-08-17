@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BombManager : MonoBehaviour
+public class BombZone_A : MonoBehaviour
 {
     public GameObject bombPrefab; // The bomb prefab to instantiate
     public Transform player; // Reference to the player
@@ -57,7 +57,7 @@ public class BombManager : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = true;
-            Debug.Log("Player entered bomb zone.");
+            Debug.Log("Player entered bomb zone A");
         }
     }
 
@@ -67,7 +67,7 @@ public class BombManager : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = false;
-            Debug.Log("Player exited bomb zone.");
+            Debug.Log("Player exited bomb zone A");
         }
     }
 }
