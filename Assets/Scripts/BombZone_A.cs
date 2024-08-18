@@ -7,7 +7,6 @@ public class BombZone_A : MonoBehaviour
     public GameObject bombPrefab; // The bomb prefab to instantiate
     public Transform player; // Reference to the player
     public float holdTime = 5f; // Time required to hold the key
-    public float explosionDelay = 10f; // Time before the bomb explodes
 
     private bool isInBombZone = false; // To check if the player is in the bomb zone
     private float holdTimer = 0f; // Timer to track the key holding time
@@ -36,19 +35,6 @@ public class BombZone_A : MonoBehaviour
     {
         // Instantiate the bomb at the player's position
         GameObject bomb = Instantiate(bombPrefab, player.position, Quaternion.identity);
-
-        // Start the explosion countdown
-        StartCoroutine(ExplodeBomb(bomb));
-    }
-
-    private System.Collections.IEnumerator ExplodeBomb(GameObject bomb)
-    {
-        // Wait for the explosion delay
-        yield return new WaitForSeconds(explosionDelay);
-
-        // Explode the bomb (you can add explosion effects here)
-        Destroy(bomb);
-        Debug.Log("Bomb exploded!");
     }
 
     private void OnTriggerEnter(Collider other)
