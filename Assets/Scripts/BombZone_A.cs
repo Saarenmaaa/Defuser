@@ -14,7 +14,7 @@ public class BombZone_A : MonoBehaviour
     void Update()
     {
         // Check if the player is in the bomb zone and the X key is pressed
-        if (isInBombZone && Input.GetKey(KeyCode.X))
+        if (isInBombZone && Input.GetKey(KeyCode.C))
         {
             holdTimer += Time.deltaTime;
 
@@ -43,7 +43,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = true;
-            Debug.Log("Player entered bomb zone A");
+            Debug.Log("Player entered bombzone");
         }
     }
 
@@ -53,7 +53,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = false;
-            Debug.Log("Player exited bomb zone A");
+            Debug.Log("Player exited bombzone");
         }
     }
 }
