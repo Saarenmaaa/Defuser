@@ -7,6 +7,9 @@ public class PlayerMovement : MonoBehaviour
     public float speed = 5f;
     public float sprintMultiplier = 1.5f;
     public Camera mainCamera; // Reference to the main camera
+    public float bombQuantity = 1;
+
+    public Rigidbody rb;
 
     void Update()
     {
@@ -49,6 +52,18 @@ public class PlayerMovement : MonoBehaviour
 
         // Apply movement to the player in world space
         transform.Translate(movement * speed * Time.deltaTime, Space.World);
+
+        // Check for movement input (WASD, arrow keys, etc.)
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
+        {
+            rb.velocity = Vector3.zero;
+        }
+    }
+
+    public void PlantBomb()
+    {
+        // Set the flag to indicate that a bomb has been planted
+        bombQuantity--;
     }
 }
 

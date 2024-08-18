@@ -758,10 +758,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9471cd67b41639745891f2d72613f3f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  projectilePrefab: {fileID: 5299070213193295384, guid: c418566e5fdadd548824b430df666964,
+  projectilePrefab: {fileID: 5299070213193295384, guid: c1125db36db3fbb4d95947ffaf9d0d8c,
     type: 3}
   firePoint: {fileID: 54597172}
   projectileSpeed: 20
+  clipSize: 10
+  reloadDelay: 1.5
 --- !u!1 &784753655
 GameObject:
   m_ObjectHideFlags: 0
@@ -885,6 +887,8 @@ MonoBehaviour:
   speed: 5
   sprintMultiplier: 1.5
   mainCamera: {fileID: 330585545}
+  bombQuantity: 2
+  rb: {fileID: 784753661}
 --- !u!54 &784753661
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -894,7 +898,7 @@ Rigidbody:
   m_GameObject: {fileID: 784753655}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 5
   m_AngularDrag: 0.05
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -907,7 +911,7 @@ Rigidbody:
     m_Bits: 0
   m_ImplicitCom: 1
   m_ImplicitTensor: 1
-  m_UseGravity: 0
+  m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 84
