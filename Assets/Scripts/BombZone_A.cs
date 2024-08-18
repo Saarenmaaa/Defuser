@@ -10,16 +10,17 @@ public class BombZone_A : MonoBehaviour
 
     private bool isInBombZone = false; // To check if the player is in the bomb zone
     private float holdTimer = 0f; // Timer to track the key holding time
+    private GameObject currentBomb; // Reference to the current bomb in the zone
 
     void Update()
     {
-        // Check if the player is in the bomb zone and the X key is pressed
+        // Check if the player is in the bomb zone and the C key is pressed
         if (isInBombZone && Input.GetKey(KeyCode.C))
         {
             holdTimer += Time.deltaTime;
 
             // Check if the key has been held for the required time
-            if (holdTimer >= holdTime)
+            if (holdTimer >= holdTime && currentBomb == null)
             {
                 PlaceBomb();
                 holdTimer = 0f; // Reset the timer
@@ -34,7 +35,19 @@ public class BombZone_A : MonoBehaviour
     private void PlaceBomb()
     {
         // Instantiate the bomb at the player's position
-        GameObject bomb = Instantiate(bombPrefab, player.position, Quaternion.identity);
+        currentBomb = Instantiate(bombPrefab, player.position, Quaternion.identity);
+        // Subscribe to the bomb's explosion event
+        BombScript bombScript = currentBomb.GetComponent<BombScript>();
+        if (bombScript != null)
+        {
+            bombScript.OnBombExploded += HandleBombExplosion;
+        }
+    }
+
+    private void HandleBombExplosion()
+    {
+        // Destroy the bomb zone when the bomb explodes
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -43,7 +56,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = true;
-            Debug.Log("Player entered bombzone");
+            Debug.Log("Player entered bomb zone");
         }
     }
 
@@ -53,8 +66,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = false;
-            Debug.Log("Player exited bombzone");
+            Debug.Log("Player exited bomb zone");
         }
     }
 }
-

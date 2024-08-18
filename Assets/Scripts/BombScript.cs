@@ -22,6 +22,10 @@ public class BombScript : MonoBehaviour
     private float defuseElapsedTime = 0f;
     private Coroutine blinkCoroutine;
 
+    // Event for bomb explosion
+    public delegate void BombExploded();
+    public event BombExploded OnBombExploded;
+
     private void Start()
     {
         // Set the bomb to the initial active color and start blinking
@@ -100,6 +104,8 @@ public class BombScript : MonoBehaviour
                 }
                 SetMaterial(activeMaterial1); // Set initial color before starting blink
                 Debug.Log("Bomb exploded!");
+                // Invoke the bomb exploded event
+                OnBombExploded?.Invoke();
             }
             timerText.text = "0";
             Destroy(gameObject);
