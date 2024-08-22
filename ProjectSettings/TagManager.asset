@@ -6,6 +6,7 @@ TagManager:
   tags:
   - BombZone_A
   - BombZone_B
+  - Bullet
   layers:
   - Default
   - TransparentFX
