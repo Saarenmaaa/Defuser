@@ -4,9 +4,16 @@ public class HomingMissile : MonoBehaviour
 {
     public float speed = 10f;
     public float rotationSpeed = 2f;
-    public float damage = 1f;  // Damage the missile does
+    public int directHitDamage = 50;  // Damage for a direct hit
+    public int maxSplashDamage = 50;  // Maximum splash damage
+    public int minSplashDamage = 1;   // Minimum splash damage
+    public float splashRadius = 5f;   // Radius within which to apply splash damage
+    public float explosionTriggerDistance = 1f; // Distance within which explosion should be triggered
+    public float minimumDamageRange = 0.5f; // Minimum distance for full damage
+
     private Vector3 targetPosition;
-    private GameObject targetMarker;  // Reference to the target marker
+    private GameObject targetMarker;     // Reference to the target marker
+
     public delegate void TargetHitDelegate(GameObject marker);
     public event TargetHitDelegate OnTargetHit;
 
@@ -27,27 +34,91 @@ public class HomingMissile : MonoBehaviour
         }
         else
         {
-            // Notify listeners that the target was hit
-            OnTargetHit?.Invoke(targetMarker); // Pass the target marker
-            Destroy(gameObject);
+            // Trigger explosion if close to the target marker
+            HandleExplosion();
+            Destroy(gameObject); // Destroy the missile after handling explosion
+        }
+    }
+
+
+    private void HandleExplosion()
+    {
+        if (targetMarker != null)
+        {
+            // Perform an overlap sphere check to find objects within the splash radius
+            Collider[] hitColliders = Physics.OverlapSphere(transform.position, splashRadius);
+
+            foreach (var hitCollider in hitColliders)
+            {
+                TargetScript target = hitCollider.GetComponent<TargetScript>();
+                if (target != null)
+                {
+                    // Calculate damage based on the distance between the marker and the target
+                    float distanceToMarker = Vector3.Distance(targetMarker.transform.position, target.transform.position);
+                    int damage = Mathf.RoundToInt(CalculateSplashDamage(distanceToMarker));
+                    ApplyDamageToTarget(damage, target);
+                }
+            }
+
+            // Notify listeners that the missile exploded
+            OnTargetHit?.Invoke(targetMarker);
+
+            // Destroy the marker after the explosion has been handled
+            Destroy(targetMarker);
+        }
+    }
+
+    private float CalculateSplashDamage(float distance)
+    {
+        if (distance <= splashRadius)
+        {
+            // Calculate damage with minimum damage range consideration
+            if (distance <= minimumDamageRange)
+            {
+                return maxSplashDamage; // Full damage if within minimum range
+            }
+            
+            // Calculate damage using a quadratic falloff for smoother transition
+            float normalizedDistance = distance / splashRadius; // Normalize distance to a value between 0 and 1
+            float damage = Mathf.Lerp(maxSplashDamage, minSplashDamage, normalizedDistance * normalizedDistance);
+            return damage;
+        }
+        return 0f;
+    }
+
+    private void ApplyDamageToTarget(int damage, TargetScript target)
+    {
+        if (target != null)
+        {
+            Debug.Log($"Explosion damage {target.gameObject.name}, {damage}");
+            target.TakeDamage(damage);
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Notify listeners that the missile hit something
         TargetScript target = collision.gameObject.GetComponent<TargetScript>();
+
         if (target != null)
         {
-            target.TakeDamage(damage); // Apply damage to the target
-            OnTargetHit?.Invoke(collision.gameObject); // Pass the target marker
+            // Apply direct hit damage to the target
+            Debug.Log($"Missile directly hit target: {collision.gameObject.name} takes {directHitDamage} damage.");
+            target.TakeDamage(directHitDamage);
+            
+            // Ensure explosion is only handled if it's not already handled
+            if (targetMarker != null)
+            {
+                HandleExplosion();
+            }
         }
-        else
+        else if (targetMarker != null)
         {
-            OnTargetHit?.Invoke(targetMarker); // Pass the marker or null
+            // Handle marker hit logic and handle explosion
+            HandleExplosion();
         }
 
         // Destroy the missile upon impact
         Destroy(gameObject);
     }
+
 }
