@@ -7,10 +7,17 @@ public class BombZone_A : MonoBehaviour
     public GameObject bombPrefab; // The bomb prefab to instantiate
     public Transform player; // Reference to the player
     public float holdTime = 5f; // Time required to hold the key
-    public float explosionDelay = 10f; // Time before the bomb explodes
-
     private bool isInBombZone = false; // To check if the player is in the bomb zone
     private float holdTimer = 0f; // Timer to track the key holding time
+    private GameObject currentBomb; // Reference to the currently planted bomb
+
+    private PlayerMovement PlayerScript; // Reference to the PlayerController script
+
+    void Start()
+    {
+        // Get the PlayerController component from the player
+        PlayerScript = player.GetComponent<PlayerMovement>();
+    }
 
     void Update()
     {
@@ -34,21 +41,40 @@ public class BombZone_A : MonoBehaviour
 
     private void PlaceBomb()
     {
-        // Instantiate the bomb at the player's position
-        GameObject bomb = Instantiate(bombPrefab, player.position, Quaternion.identity);
+        // Check if the player has already planted a bomb
+        if (PlayerScript.bombQuantity <= 0)
+        {
+            Debug.Log("Player has already planted a bomb.");
+            return;
+        }
 
-        // Start the explosion countdown
-        StartCoroutine(ExplodeBomb(bomb));
+        // Check if a bomb has already been placed in this zone
+        if (currentBomb != null)
+        {
+            Debug.Log("A bomb is already placed in this zone.");
+            return;
+        }
+
+        // Instantiate the bomb at a position in front of the player
+        Vector3 playerPosition = player.position + player.forward * 3f; // Adjust the distance as needed
+        currentBomb = Instantiate(bombPrefab, playerPosition, Quaternion.identity);
+
+        // Set the player’s bomb status
+        PlayerScript.PlantBomb();
+
+        // Subscribe to the bomb's explosion event
+        BombScript bombScript = currentBomb.GetComponent<BombScript>();
+        if (bombScript != null)
+        {
+            bombScript.OnBombExploded += HandleBombExplosion;
+        }
     }
 
-    private System.Collections.IEnumerator ExplodeBomb(GameObject bomb)
+    private void HandleBombExplosion()
     {
-        // Wait for the explosion delay
-        yield return new WaitForSeconds(explosionDelay);
+        // Handle bomb explosion
+        Destroy(gameObject);
 
-        // Explode the bomb (you can add explosion effects here)
-        Destroy(bomb);
-        Debug.Log("Bomb exploded!");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -57,7 +83,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = true;
-            Debug.Log("Player entered bomb zone A");
+            Debug.Log("Player entered bombzone");
         }
     }
 
@@ -67,8 +93,7 @@ public class BombZone_A : MonoBehaviour
         if (other.transform == player)
         {
             isInBombZone = false;
-            Debug.Log("Player exited bomb zone A");
+            Debug.Log("Player exited bombzone");
         }
     }
 }
-
