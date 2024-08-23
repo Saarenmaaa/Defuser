@@ -1,16 +1,19 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Collections;
 
 public class TargetingSystem : MonoBehaviour
 {
     public Camera mainCamera;
     public GameObject targetMarkerPrefab;
-    public GameObject missilePrefab;        // Prefab for the missile
+    public GameObject missilePrefab;
     public LayerMask groundLayer;
+    public float missileCooldown = 0.5f;  // Cooldown time between missile launches
 
     private List<GameObject> activeMissiles = new List<GameObject>();   // List to manage active missiles
-    private List<GameObject> activeMarkers = new List<GameObject>();    // List to manage active markers
+    private Dictionary<GameObject, GameObject> missileMarkerMap = new Dictionary<GameObject, GameObject>(); // Map missiles to markers
     private const int maxMissiles = 3;
+    private bool canLaunchMissile = true; // To manage cooldown
 
     void Start()
     {
@@ -22,10 +25,18 @@ public class TargetingSystem : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && activeMissiles.Count < maxMissiles)
+        if (Input.GetMouseButtonDown(0) && canLaunchMissile && activeMissiles.Count < maxMissiles)
         {
-            PlaceMarkerAndLaunchMissile();
+            StartCoroutine(LaunchMissileAfterDelay());
         }
+    }
+
+    IEnumerator LaunchMissileAfterDelay()
+    {
+        canLaunchMissile = false;
+        PlaceMarkerAndLaunchMissile();
+        yield return new WaitForSeconds(missileCooldown);
+        canLaunchMissile = true;
     }
 
     void PlaceMarkerAndLaunchMissile()
@@ -37,10 +48,10 @@ public class TargetingSystem : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
             Vector3 targetPosition = hit.point;
+            targetPosition.y += 0.1f;  // Adjust the height of the marker
 
             // Create a new target marker at the clicked position
             GameObject targetMarker = Instantiate(targetMarkerPrefab, targetPosition, Quaternion.identity);
-            activeMarkers.Add(targetMarker);  // Add the marker to the active markers list
 
             LaunchMissile(targetMarker);
         }
@@ -55,22 +66,31 @@ public class TargetingSystem : MonoBehaviour
 
             if (missileScript != null)
             {
-                missileScript.SetTarget(targetMarker.transform.position);
-                missileScript.OnTargetHit += () => HandleMissileHit(missile, targetMarker);  // Pass both missile and marker
+                missileScript.SetTarget(targetMarker.transform.position, targetMarker);
+                missileScript.OnTargetHit += (marker) => HandleMissileHit(missile, marker);
             }
 
-            activeMissiles.Add(missile);  // Add the missile to the active missiles list
+            activeMissiles.Add(missile); // Add the missile to the active missiles list
+            missileMarkerMap[missile] = targetMarker; // Map this missile to its marker
         }
     }
 
-    void HandleMissileHit(GameObject missile, GameObject targetMarker)
+    void HandleMissileHit(GameObject missile, GameObject marker)
     {
-        // Remove the missile and marker from their respective lists
+        // Remove the missile from the active missiles list
         activeMissiles.Remove(missile);
-        activeMarkers.Remove(targetMarker);
 
-        // Destroy the missile and marker
+        // Remove the marker from the map and destroy it
+        if (missileMarkerMap.TryGetValue(missile, out GameObject associatedMarker))
+        {
+            missileMarkerMap.Remove(missile);
+            if (associatedMarker != null)
+            {
+                Destroy(associatedMarker);
+            }
+        }
+
+        // Destroy the missile
         Destroy(missile);
-        Destroy(targetMarker);
     }
 }

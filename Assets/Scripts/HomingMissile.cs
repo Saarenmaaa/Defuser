@@ -3,42 +3,51 @@ using UnityEngine;
 public class HomingMissile : MonoBehaviour
 {
     public float speed = 10f;
-    public float rotationSpeed = 5f;
+    public float rotationSpeed = 2f;
+    public float damage = 1f;  // Damage the missile does
     private Vector3 targetPosition;
-    private bool targetSet = false;
+    private GameObject targetMarker;  // Reference to the target marker
+    public delegate void TargetHitDelegate(GameObject marker);
+    public event TargetHitDelegate OnTargetHit;
 
-    // Event to notify when the missile hits the target
-    public delegate void TargetHit();
-    public event TargetHit OnTargetHit;
-
-    public void SetTarget(Vector3 target)
+    public void SetTarget(Vector3 target, GameObject marker)
     {
         targetPosition = target;
-        targetSet = true;
+        targetMarker = marker;  // Set the marker associated with this missile
     }
 
     void Update()
     {
-        if (targetSet)
+        Vector3 direction = targetPosition - transform.position;
+        if (direction.magnitude > 0.1f)
         {
-            Vector3 direction = (targetPosition - transform.position).normalized;
-            Quaternion lookRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Slerp(transform.rotation, lookRotation, rotationSpeed * Time.deltaTime);
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
             transform.position += transform.forward * speed * Time.deltaTime;
-
-            if (Vector3.Distance(transform.position, targetPosition) < 0.5f)
-            {
-                HitTarget();
-            }
+        }
+        else
+        {
+            // Notify listeners that the target was hit
+            OnTargetHit?.Invoke(targetMarker); // Pass the target marker
+            Destroy(gameObject);
         }
     }
 
-    void HitTarget()
+    private void OnCollisionEnter(Collision collision)
     {
-        if (OnTargetHit != null)
+        // Notify listeners that the missile hit something
+        TargetScript target = collision.gameObject.GetComponent<TargetScript>();
+        if (target != null)
         {
-            OnTargetHit();
+            target.TakeDamage(damage); // Apply damage to the target
+            OnTargetHit?.Invoke(collision.gameObject); // Pass the target marker
         }
-        Destroy(gameObject);  // Destroy the missile
+        else
+        {
+            OnTargetHit?.Invoke(targetMarker); // Pass the marker or null
+        }
+
+        // Destroy the missile upon impact
+        Destroy(gameObject);
     }
 }

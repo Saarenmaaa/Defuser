@@ -121,7 +121,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   rotationSpeed: 200
-  damage: 1
+  damage: 3
 --- !u!54 &620025530763650296
 Rigidbody:
   m_ObjectHideFlags: 0
