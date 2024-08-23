@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class BulletScript : MonoBehaviour
 {
-    public float damage = 1.0f;  // Set the damage value as needed
-
+    public float damage = 1.0f;
+    public float lifetime = 2f;
+    void Start()
+    {
+        // Destroy the projectile after the specified lifetime
+        Destroy(gameObject, lifetime);
+    }
     private void OnCollisionEnter(Collision collision)
     {
         // Check if the object that the bullet collided with is a target
