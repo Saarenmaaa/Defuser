@@ -125,16 +125,6 @@ public class MineScript : MonoBehaviour
             }
         }
 
-        // Notify the TankSpecial that a mine has exploded
-        if (tankSpecial != null)
-        {
-            tankSpecial.MineExploded();
-        }
-        else
-        {
-            Debug.LogError("TankSpecial reference is missing in MineScript.");
-        }
-
         // Destroy the mine after explosion
         Destroy(gameObject);
     }
@@ -143,5 +133,10 @@ public class MineScript : MonoBehaviour
     public void SetTankSpecial(TankSpecial tankSpecial)
     {
         this.tankSpecial = tankSpecial;
+    }
+
+    void OnDestroy()
+    {
+        tankSpecial.MineExploded();
     }
 }

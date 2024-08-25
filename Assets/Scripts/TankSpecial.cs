@@ -11,7 +11,7 @@ public class TankSpecial : MonoBehaviour
 
     void Update()
     {
-        // Check if the player is in the bomb zone and the X key is pressed
+        // Check if the X key is pressed
         if (Input.GetButtonDown("Fire2"))
         {
             PlaceBomb();
@@ -25,22 +25,16 @@ public class TankSpecial : MonoBehaviour
         {
             Vector3 playerPosition = player.position + player.forward * 5f;
             playerPosition.y -= 0.5f;
-            GameObject newMine = Instantiate(bombPrefab, playerPosition, Quaternion.identity);
+            GameObject newBomb = Instantiate(bombPrefab, playerPosition, Quaternion.identity);
+            MineScript mineScript = newBomb.GetComponent<MineScript>();
             
-            // Ensure the new mine has a MineScript component and assign a reference to this script
-            MineScript mineScript = newMine.GetComponent<MineScript>();
             if (mineScript != null)
             {
-                mineScript.SetTankSpecial(this); // Set the reference to TankSpecial
-            }
-            else
-            {
-                Debug.LogError("The bombPrefab does not have a MineScript component.");
+                mineScript.SetTankSpecial(this); // Set reference to this TankSpecial
             }
 
             // Update the mine count after placing the bomb
             PlaceMine();
-            Debug.Log("Bomb placed. Current mine count: " + currentMineCount);
         }
         else
         {
@@ -66,7 +60,6 @@ public class TankSpecial : MonoBehaviour
         if (currentMineCount > 0)
         {
             currentMineCount--;
-            Debug.Log("Mine exploded. Current mine count: " + currentMineCount);
         }
     }
 }
