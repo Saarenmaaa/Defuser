@@ -607,6 +607,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: TargetDummy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 5944841261577623482, guid: 4458a297ec01aac44935f012132f7bdf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 7724647742080007304, guid: 4458a297ec01aac44935f012132f7bdf,
         type: 3}
       propertyPath: m_ProvidesContacts
@@ -752,6 +757,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: TargetDummy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5944841261577623482, guid: 4458a297ec01aac44935f012132f7bdf,
+        type: 3}
+      propertyPath: m_TagString
+      value: Player
       objectReference: {fileID: 0}
     - target: {fileID: 9213982671594859108, guid: 4458a297ec01aac44935f012132f7bdf,
         type: 3}

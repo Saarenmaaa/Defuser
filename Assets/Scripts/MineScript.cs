@@ -6,8 +6,12 @@ public class MineScript : MonoBehaviour
     public Material defaultMaterial; // The default material of the mine.
     public Material blinkMaterial; // The material used for the blinking effect.
     public GameObject blinkingPart; // Reference to the specific child GameObject that should blink.
+    public float explosionRadius = 5f; // The radius of the explosion effect.
+    public float explosionDamage = 50f; // The amount of damage dealt in the explosion.
     private Renderer blinkingRenderer; // The Renderer of the blinking part.
     private Coroutine blinkCoroutine; // Reference to the blinking coroutine.
+    private bool isActivated = false; // Track if the mine has been activated
+    private TankSpecial tankSpecial; // Reference to the TankSpecial script
 
     private void Start()
     {
@@ -41,6 +45,13 @@ public class MineScript : MonoBehaviour
             {
                 blinkCoroutine = StartCoroutine(BlinkEffect());
             }
+
+            // Start the explosion countdown.
+            if (!isActivated)
+            {
+                isActivated = true;
+                StartCoroutine(ExplosionCountdown());
+            }
         }
     }
 
@@ -48,13 +59,22 @@ public class MineScript : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            TargetScript targetScript = other.GetComponent<TargetScript>();
-            if (targetScript != null)
+            // Stop the blinking effect
+            if (blinkCoroutine != null)
             {
-                targetScript.TakeDamage(50f);
+                StopCoroutine(blinkCoroutine);
+                blinkCoroutine = null;
+                if (blinkingRenderer != null)
+                {
+                    blinkingRenderer.material = defaultMaterial; // Reset to default material
+                }
             }
 
-            Destroy(gameObject);
+            // If the mine is activated, explode immediately if the player exits the trigger zone.
+            if (isActivated)
+            {
+                Explode();
+            }
         }
     }
 
@@ -62,10 +82,66 @@ public class MineScript : MonoBehaviour
     {
         while (true)
         {
-            blinkingRenderer.material = blinkMaterial;
-            yield return new WaitForSeconds(0.5f);
-            blinkingRenderer.material = defaultMaterial;
-            yield return new WaitForSeconds(0.5f);
+            if (blinkingRenderer != null)
+            {
+                blinkingRenderer.material = blinkMaterial;
+                yield return new WaitForSeconds(0.5f);
+                blinkingRenderer.material = defaultMaterial;
+                yield return new WaitForSeconds(0.5f);
+            }
+            else
+            {
+                yield break;
+            }
         }
+    }
+
+    private IEnumerator ExplosionCountdown()
+    {
+        yield return new WaitForSeconds(3f);
+
+        // If still activated, trigger the explosion
+        if (isActivated)
+        {
+            Explode();
+        }
+    }
+
+    private void Explode()
+    {
+        // Get all colliders within the explosion radius
+        Collider[] hitColliders = Physics.OverlapSphere(transform.position, explosionRadius);
+
+        foreach (var hitCollider in hitColliders)
+        {
+            if (hitCollider.CompareTag("Player"))
+            {
+                // Deal damage to each player within the explosion radius
+                TargetScript targetScript = hitCollider.GetComponent<TargetScript>();
+                if (targetScript != null)
+                {
+                    targetScript.TakeDamage(explosionDamage);
+                }
+            }
+        }
+
+        // Notify the TankSpecial that a mine has exploded
+        if (tankSpecial != null)
+        {
+            tankSpecial.MineExploded();
+        }
+        else
+        {
+            Debug.LogError("TankSpecial reference is missing in MineScript.");
+        }
+
+        // Destroy the mine after explosion
+        Destroy(gameObject);
+    }
+
+    // Method to set the reference to TankSpecial
+    public void SetTankSpecial(TankSpecial tankSpecial)
+    {
+        this.tankSpecial = tankSpecial;
     }
 }
