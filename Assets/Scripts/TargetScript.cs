@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-
-
 public class TargetScript : MonoBehaviour
 {
     public float health = 5000f;
@@ -13,10 +11,13 @@ public class TargetScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthText.text = health.ToString();
+        if (healthText != null)
+        {
+            healthText.text = health.ToString();
+        }
         if (health <= 0)
         {
-            Destroy(gameObject);  // Destroy the target when health is depleted
+            Destroy(gameObject);
         }
 
     }
