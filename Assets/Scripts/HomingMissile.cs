@@ -104,21 +104,14 @@ public class HomingMissile : MonoBehaviour
             // Apply direct hit damage to the target
             Debug.Log($"Missile directly hit target: {collision.gameObject.name} takes {directHitDamage} damage.");
             target.TakeDamage(directHitDamage);
-            
-            // Ensure explosion is only handled if it's not already handled
-            if (targetMarker != null)
-            {
-                HandleExplosion();
-            }
-        }
-        else if (targetMarker != null)
-        {
-            // Handle marker hit logic and handle explosion
-            HandleExplosion();
         }
 
         // Destroy the missile upon impact
         Destroy(gameObject);
     }
 
+    void OnDestroy()
+    {
+        HandleExplosion();
+    }
 }
