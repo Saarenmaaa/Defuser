@@ -680,6 +680,10 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 1676217563}
+    - targetCorrespondingSourceObject: {fileID: 6238751489476146613, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1676217564}
   m_SourcePrefab: {fileID: 100100000, guid: d2c9dc4f34433954cb73020c37d73661, type: 3}
 --- !u!4 &1676217556 stripped
 Transform:
@@ -700,7 +704,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 1899378142}
-  swingDuration: 0.5
+  swingDuration: 0.1
+--- !u!114 &1676217564
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 998878835}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8474d756f38e8c44c8c6366b80d3a0e1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mainCamera: {fileID: 330585545}
+  groundLayer:
+    serializedVersion: 2
+    m_Bits: 64
+  dashCooldown: 2
 --- !u!1001 &1841351824
 PrefabInstance:
   m_ObjectHideFlags: 0

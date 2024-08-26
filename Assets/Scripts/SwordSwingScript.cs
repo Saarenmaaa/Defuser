@@ -4,7 +4,7 @@ using UnityEngine;
 public class SwordSwingScript : MonoBehaviour
 {
     public Animator animator;
-    public float swingDuration = 0.5f;
+    public float swingDuration = 0.1f;
 
     void Update()
     {
@@ -17,7 +17,6 @@ public class SwordSwingScript : MonoBehaviour
     private IEnumerator SwingSword()
     {
         animator.Play("SwordSwing"); // Play the swing animation
-        Debug.Log("Swing Started"); // Debug log to confirm swing start
         yield return new WaitForSeconds(swingDuration); // Wait for the swing duration
     }
 }
