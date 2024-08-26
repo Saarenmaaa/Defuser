@@ -1,28 +1,35 @@
 using UnityEngine;
-using System;
 
 public class SmokeScript : MonoBehaviour
 {
-    public float speed = 10f;
+    public float speed = 20f;
+    public float rotationSpeed = 20f;
     private Vector3 targetPosition;
     private GameObject targetMarker;
 
-    public event Action<GameObject, GameObject> OnTargetHit;
-
-    public void SetTarget(Vector3 position, GameObject marker)
+    public void SetTarget(Vector3 target, GameObject marker)
     {
-        targetPosition = position;
+        targetPosition = target;
         targetMarker = marker;
     }
 
     void Update()
     {
-        float step = speed * Time.deltaTime;
-        transform.position = Vector3.MoveTowards(transform.position, targetPosition, step);
+        Vector3 direction = targetPosition - transform.position;
 
-        if (Vector3.Distance(transform.position, targetPosition) < 0.1f)
+        if (direction.magnitude > 0.1f)
         {
-            OnTargetHit?.Invoke(gameObject, targetMarker);
+            // Rotate smoothly towards the target
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            transform.rotation = Quaternion.Slerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+
+            // Move forward in the direction the grenade is facing
+            transform.position += transform.forward * speed * Time.deltaTime;
+        }
+        else
+        {
+            Destroy(targetMarker);
+            Destroy(gameObject);
         }
     }
 }

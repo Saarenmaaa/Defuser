@@ -573,6 +573,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 5356049410888434942, guid: 947c08c778a21124bab66805de60e1e1,
+        type: 3}
+      propertyPath: mainCamera
+      value: 
+      objectReference: {fileID: 330585545}
     - target: {fileID: 8885514951332052732, guid: 947c08c778a21124bab66805de60e1e1,
         type: 3}
       propertyPath: m_Name
@@ -580,11 +585,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
-    m_AddedGameObjects:
-    - targetCorrespondingSourceObject: {fileID: 1298217837408951712, guid: 947c08c778a21124bab66805de60e1e1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1234111432}
+    m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 947c08c778a21124bab66805de60e1e1, type: 3}
 --- !u!4 &1189976672 stripped
@@ -593,59 +594,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 1189976671}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1234111431
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1234111432}
-  - component: {fileID: 1234111433}
-  m_Layer: 0
-  m_Name: Special
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1234111432
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234111431}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 2.21}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 1189976672}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1234111433
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1234111431}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e23a4fc3137ac24c972b95f3d70e311, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mainCamera: {fileID: 330585545}
-  targetMarkerPrefab: {fileID: 4577824702133084323, guid: 0da23ec25296a0e47b69e5ed5721c736,
-    type: 3}
-  smokeGrenadePrefab: {fileID: 4596384544715732041, guid: 8e0701a9681230148bca5a350f767b29,
-    type: 3}
-  groundLayer:
-    serializedVersion: 2
-    m_Bits: 64
-  smokeCooldown: 30
 --- !u!1001 &1841351824
 PrefabInstance:
   m_ObjectHideFlags: 0

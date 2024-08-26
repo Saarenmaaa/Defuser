@@ -45,42 +45,28 @@ public class SoldierSpecial : MonoBehaviour
         if (Physics.Raycast(ray, out hit, Mathf.Infinity, groundLayer))
         {
             Vector3 targetPosition = hit.point;
-            targetPosition.y += 0.1f;  // Adjust marker position slightly above the ground
+            targetPosition.y += 0.1f;
             GameObject targetMarker = Instantiate(targetMarkerPrefab, targetPosition, Quaternion.identity);
-            LaunchSmoke(targetMarker);
+            LaunchSmoke(targetMarker, targetPosition);
         }
     }
 
-    void LaunchSmoke(GameObject targetMarker)
+    void LaunchSmoke(GameObject targetMarker, Vector3 targetPosition)
     {
-        if (smokeGrenadePrefab != null)
+        GameObject smokeGrenade = Instantiate(smokeGrenadePrefab, transform.position, Quaternion.identity);
+        
+        // Set the initial rotation to face the target immediately
+        Vector3 direction = targetPosition - smokeGrenade.transform.position;
+        if (direction != Vector3.zero)
         {
-            GameObject smokeGrenade = Instantiate(smokeGrenadePrefab, transform.position, Quaternion.identity);
-            SmokeScript smokeGrenadeScript = smokeGrenade.GetComponent<SmokeScript>();
-
-            if (smokeGrenadeScript != null)
-            {
-                smokeGrenadeScript.SetTarget(targetMarker.transform.position, targetMarker);
-                smokeGrenadeScript.OnTargetHit += HandleGrenadeHit;
-            }
-
-            grenadeMarkerMap[smokeGrenade] = targetMarker; // Map this grenade to its marker
-        }
-    }
-
-    void HandleGrenadeHit(GameObject smokeGrenade, GameObject marker)
-    {
-        // Remove the marker from the map and destroy it
-        if (grenadeMarkerMap.TryGetValue(smokeGrenade, out GameObject associatedMarker))
-        {
-            grenadeMarkerMap.Remove(smokeGrenade);
-            if (associatedMarker != null)
-            {
-                Destroy(associatedMarker);
-            }
+            Quaternion targetRotation = Quaternion.LookRotation(direction);
+            smokeGrenade.transform.rotation = targetRotation;
         }
 
-        // Destroy the grenade
-        Destroy(smokeGrenade);
+        SmokeScript smokeScript = smokeGrenade.GetComponent<SmokeScript>();
+        smokeScript.SetTarget(targetPosition, targetMarker);
+
+        // Store the grenade and its associated marker in the dictionary
+        grenadeMarkerMap[smokeGrenade] = targetMarker;
     }
 }
