@@ -24,7 +24,7 @@ public class TankSpecial : MonoBehaviour
         if (CanPlaceMine())
         {
             Vector3 playerPosition = player.position + player.forward * 5f;
-            playerPosition.y -= 0.5f;
+            playerPosition.y -= 0.9f;
             GameObject newBomb = Instantiate(bombPrefab, playerPosition, Quaternion.identity);
             MineScript mineScript = newBomb.GetComponent<MineScript>();
             
