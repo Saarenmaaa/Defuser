@@ -234,6 +234,7 @@ MonoBehaviour:
   bombPrefab: {fileID: 1271304635334715096, guid: cb7afb30d602edc4dab99df5018fa618,
     type: 3}
   player: {fileID: 5345634733430029212}
+  maxMines: 3
 --- !u!1 &1937844565324396140
 GameObject:
   m_ObjectHideFlags: 0
