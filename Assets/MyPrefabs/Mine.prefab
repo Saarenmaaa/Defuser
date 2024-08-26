@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 1271304635334715096}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.1, z: 5}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -103,8 +103,6 @@ MonoBehaviour:
   blinkingPart: {fileID: 6710523907647199533}
   explosionRadius: 5
   explosionDamage: 50
-  health: 100
-  healthText: {fileID: 8326597296508727200}
 --- !u!114 &978112368400007164
 MonoBehaviour:
   m_ObjectHideFlags: 0
