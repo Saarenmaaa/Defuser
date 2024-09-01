@@ -8,18 +8,16 @@ public class Teleport : MonoBehaviour
     public LayerMask groundLayer;      // Layer mask for the ground
     public float dashCooldown = 2f;    // Cooldown between dashes
     public float lockedYPosition = 0f; // The locked Y position of the player
-
-    private bool canDash = true;       // To track if the player can dash
+    private bool canDash = true;
 
     void Start()
     {
-        // Initialize the locked Y position with the player's current Y position
         lockedYPosition = transform.position.y;
     }
 
     void Update()
     {
-        if (Input.GetButtonDown("Fire2") && canDash) // Check for dash input
+        if (Input.GetButtonDown("Fire2") && canDash)
         {
             StartCoroutine(TeleportDash());
         }
