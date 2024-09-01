@@ -1164,6 +1164,11 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 4004665926313524424, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: dashCooldown
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 6238751489476146613, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_Name
