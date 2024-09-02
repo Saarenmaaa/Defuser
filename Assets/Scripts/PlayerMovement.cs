@@ -31,7 +31,7 @@ public class PlayerMovement : MonoBehaviour
             if (direction != Vector3.zero)
             {
                 Quaternion toRotation = Quaternion.LookRotation(direction);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, toRotation, 1000f * Time.deltaTime);
+                rb.MoveRotation(Quaternion.RotateTowards(transform.rotation, toRotation, 1000f * Time.deltaTime));
             }
         }
 
@@ -50,14 +50,11 @@ public class PlayerMovement : MonoBehaviour
             movement *= sprintMultiplier;
         }
 
-        // Apply movement to the player in world space
-        transform.Translate(movement * speed * Time.deltaTime, Space.World);
+        // Calculate the new position using the Rigidbody
+        Vector3 newPosition = rb.position + movement * speed * Time.deltaTime;
 
-        // Check for movement input (WASD, arrow keys, etc.)
-        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
-        {
-            rb.velocity = Vector3.zero;
-        }
+        // Move the player using Rigidbody to maintain physics interactions
+        rb.MovePosition(newPosition);
     }
 
     public void PlantBomb()
@@ -66,4 +63,3 @@ public class PlayerMovement : MonoBehaviour
         bombQuantity--;
     }
 }
-
