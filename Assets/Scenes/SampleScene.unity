@@ -1690,12 +1690,22 @@ PrefabInstance:
     - target: {fileID: 158326231059293143, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_UseGravity
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 158326231059293143, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_Constraints
       value: 84
+      objectReference: {fileID: 0}
+    - target: {fileID: 158326231059293143, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: m_Interpolate
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 158326231059293143, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: m_CollisionDetection
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4004665926313524424, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
@@ -1772,6 +1782,11 @@ PrefabInstance:
       propertyPath: healthText
       value: 
       objectReference: {fileID: 758380616}
+    - target: {fileID: 8780528370122977277, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8957205950012104130, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_IsTrigger
