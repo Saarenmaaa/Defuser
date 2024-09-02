@@ -134,7 +134,7 @@ GameObject:
   - component: {fileID: 7009176}
   - component: {fileID: 7009175}
   - component: {fileID: 7009174}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -163,7 +163,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7009172}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3a43f4edd44a3bc4699362e269ccf652, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -392,7 +392,7 @@ GameObject:
   - component: {fileID: 336793564}
   - component: {fileID: 336793563}
   - component: {fileID: 336793562}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -421,7 +421,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 336793560}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3a43f4edd44a3bc4699362e269ccf652, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1056,7 +1056,7 @@ GameObject:
   - component: {fileID: 805220953}
   - component: {fileID: 805220952}
   - component: {fileID: 805220951}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1085,7 +1085,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 805220949}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3a43f4edd44a3bc4699362e269ccf652, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1417,7 +1417,7 @@ GameObject:
   - component: {fileID: 1451527420}
   - component: {fileID: 1451527419}
   - component: {fileID: 1451527418}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1446,7 +1446,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1451527416}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 3a43f4edd44a3bc4699362e269ccf652, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -1653,7 +1653,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1575901863}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Walls
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1705,7 +1705,7 @@ PrefabInstance:
     - target: {fileID: 158326231059293143, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_CollisionDetection
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4004665926313524424, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
@@ -1777,6 +1777,21 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 330585545}
+    - target: {fileID: 7610951744774310538, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: raycastDistance
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610951744774310538, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: sprintMultiplier
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7610951744774310538, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: wallLayer.m_Bits
+      value: 128
+      objectReference: {fileID: 0}
     - target: {fileID: 8020319488169890172, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: healthText
@@ -1785,7 +1800,12 @@ PrefabInstance:
     - target: {fileID: 8780528370122977277, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8957205950012104130, guid: d2c9dc4f34433954cb73020c37d73661,
+        type: 3}
+      propertyPath: m_Size.y
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8957205950012104130, guid: d2c9dc4f34433954cb73020c37d73661,
         type: 3}
